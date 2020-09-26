@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/dribbble-404-images-typescript/static/css/main.5f361e03.chunk.css",
+    "main.js": "/dribbble-404-images-typescript/static/js/main.822f324f.chunk.js",
+    "main.js.map": "/dribbble-404-images-typescript/static/js/main.822f324f.chunk.js.map",
+    "runtime-main.js": "/dribbble-404-images-typescript/static/js/runtime-main.29272eaf.js",
+    "runtime-main.js.map": "/dribbble-404-images-typescript/static/js/runtime-main.29272eaf.js.map",
+    "static/js/2.f95088c5.chunk.js": "/dribbble-404-images-typescript/static/js/2.f95088c5.chunk.js",
+    "static/js/2.f95088c5.chunk.js.map": "/dribbble-404-images-typescript/static/js/2.f95088c5.chunk.js.map",
+    "index.html": "/dribbble-404-images-typescript/index.html",
+    "precache-manifest.03883a617bc7beb70b20e15bec0ca41f.js": "/dribbble-404-images-typescript/precache-manifest.03883a617bc7beb70b20e15bec0ca41f.js",
+    "service-worker.js": "/dribbble-404-images-typescript/service-worker.js",
+    "static/css/main.5f361e03.chunk.css.map": "/dribbble-404-images-typescript/static/css/main.5f361e03.chunk.css.map",
+    "static/js/2.f95088c5.chunk.js.LICENSE.txt": "/dribbble-404-images-typescript/static/js/2.f95088c5.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/dribbble-404-images-typescript/static/media/logo.5d5d9eef.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.29272eaf.js",
+    "static/js/2.f95088c5.chunk.js",
+    "static/css/main.5f361e03.chunk.css",
+    "static/js/main.822f324f.chunk.js"
+  ]
+}
