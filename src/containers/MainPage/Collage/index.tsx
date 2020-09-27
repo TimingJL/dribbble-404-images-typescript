@@ -20,7 +20,6 @@ interface ICollage {
 
 const Collage = ({ characters }: ICollage) => {
 	const characterList = characters.split('');
-
 	return (
 		<Section data-testid="collage" size={characterList.length}>
 			{characterList.map((character, index) => (

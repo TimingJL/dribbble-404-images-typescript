@@ -36,7 +36,7 @@ const MainPage = () => {
 	);
 
 	const messageMemo = useMemo(() => <Message />, []);
-	const collageMemo = useMemo(() => <Collage characters={characters} />, [pickedColor]);
+	const collageMemo = useMemo(() => <Collage characters={characters} />, [characters]);
 
 	return (
 		<Container>

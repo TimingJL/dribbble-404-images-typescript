@@ -39,7 +39,7 @@ const CollageImages = ({ character, charId }: ICollageImages) => {
 				})}
 			</Container>
 		),
-		[pickedColor]
+		[pickedColor, charId, positions]
 	);
 };
 
