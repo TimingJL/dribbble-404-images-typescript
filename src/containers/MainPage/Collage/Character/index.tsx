@@ -29,7 +29,7 @@ interface ICharacter {
 
 const Character = ({ character, charId }: ICharacter) => {
 	return (
-		<Container>
+		<Container data-testid="character">
 			<BackgroundShape>{character}</BackgroundShape>
 			<CollageImages character={character} charId={charId} />
 		</Container>

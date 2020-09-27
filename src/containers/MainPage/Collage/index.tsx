@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components/macro';
 import Character from './Character';
 
@@ -14,12 +14,15 @@ const Section = styled.section<ISection>`
 
 const makeKey = (character: string, index: number) => `character-${character}_${index}`;
 
-const Collage = () => {
-	const [characters] = useState('404');
+interface ICollage {
+	characters: string;
+}
+
+const Collage = ({ characters }: ICollage) => {
 	const characterList = characters.split('');
 
 	return (
-		<Section size={characterList.length}>
+		<Section data-testid="collage" size={characterList.length}>
 			{characterList.map((character, index) => (
 				<Character
 					key={makeKey(character, index)}

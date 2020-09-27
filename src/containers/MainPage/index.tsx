@@ -19,6 +19,8 @@ const MainPage = () => {
 	const defaultColor = convertLengthToColor(defaultValue, 100);
 	const [pickedColor, setPickedColor] = useState(defaultColor);
 	const [rangeValue, setRangeValue] = useState(defaultValue);
+	const [characters] = useState('404');
+
 	const handleOnMouseUp = useCallback(
 		event => {
 			const color = convertLengthToColor(Number(event.target.value), 100);
@@ -34,7 +36,7 @@ const MainPage = () => {
 	);
 
 	const messageMemo = useMemo(() => <Message />, []);
-	const collageMemo = useMemo(() => <Collage />, [pickedColor]);
+	const collageMemo = useMemo(() => <Collage characters={characters} />, [pickedColor]);
 
 	return (
 		<Container>
