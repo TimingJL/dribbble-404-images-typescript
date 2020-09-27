@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components/macro';
 import Navigation from 'containers/Navigation';
 import MainPage from 'containers/MainPage';
 import Footer from 'containers/Footer';
+import GithubCorner from 'react-github-corner';
 
 const FullScreenContainer = styled.div`
 	height: 100vh;
@@ -12,12 +13,16 @@ const FullScreenContainer = styled.div`
 `;
 
 const App = () => {
+	const navigationMemo = useMemo(() => <Navigation />, []);
 	return (
-		<FullScreenContainer>
-			<Navigation />
-			<MainPage />
-			<Footer />
-		</FullScreenContainer>
+		<>
+			<FullScreenContainer>
+				{navigationMemo}
+				<MainPage />
+				<Footer />
+			</FullScreenContainer>
+			<GithubCorner href="https://github.com/TimingJL/dribbble-404-images-typescript" />
+		</>
 	);
 };
 
