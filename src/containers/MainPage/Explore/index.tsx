@@ -65,9 +65,9 @@ interface IExplore {
 }
 
 const Explore = ({ rangeValue, handleOnDrag, handleOnMouseUp }: IExplore) => {
-	const pickedColor = convertLengthToColor(rangeValue, 100);
+	const pickedColor = convertLengthToColor(rangeValue % 101, 100);
 	return (
-		<Container color={pickedColor}>
+		<Container data-testid="explore" color={pickedColor}>
 			<input
 				type="range"
 				min="0"
