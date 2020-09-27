@@ -2,8 +2,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import Character from './Character';
 
-const Section = styled.section`
+interface ISection {
+	size: number;
+}
+
+const Section = styled.section<ISection>`
 	display: flex;
+	font-weight: 900;
+	font-size: ${props => 90 / props.size}vw;
 `;
 
 const makeKey = (character: string, index: number) => `character-${character}_${index}`;
@@ -13,7 +19,7 @@ const Collage = () => {
 	const characterList = characters.split('');
 
 	return (
-		<Section>
+		<Section size={characterList.length}>
 			{characterList.map((character, index) => (
 				<Character key={makeKey(character, index)} character={character} />
 			))}
