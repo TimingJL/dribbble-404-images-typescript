@@ -1,0 +1,17 @@
+const SIZE_THUMB = 36;
+const COLOR_RED = '#f00';
+const COLOR_YELLOW = '#ff0';
+const COLOR_GREEN = '#0f0';
+const COLOR_BLUE_LIGHT = '#0ff';
+const COLOR_BLUE_DARK = '#00f';
+const COLOR_PURPLE = '#f0f';
+
+export {
+	SIZE_THUMB,
+	COLOR_RED,
+	COLOR_YELLOW,
+	COLOR_GREEN,
+	COLOR_BLUE_LIGHT,
+	COLOR_BLUE_DARK,
+	COLOR_PURPLE,
+};
