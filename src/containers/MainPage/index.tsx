@@ -19,10 +19,13 @@ const MainPage = () => {
 	const defaultColor = convertLengthToColor(defaultValue, 100);
 	const [pickedColor, setPickedColor] = useState(defaultColor);
 	const [rangeValue, setRangeValue] = useState(defaultValue);
-	const handleOnMouseUp = useCallback(event => {
-		const color = convertLengthToColor(Number(event.target.value), 100);
-		setPickedColor(color);
-	}, []);
+	const handleOnMouseUp = useCallback(
+		event => {
+			const color = convertLengthToColor(Number(event.target.value), 100);
+			setPickedColor(color);
+		},
+		[setPickedColor]
+	);
 	const handleOnDrag = useCallback(
 		event => {
 			setRangeValue(event.target.value);
@@ -30,11 +33,12 @@ const MainPage = () => {
 		[setRangeValue]
 	);
 
+	const messageMemo = useMemo(() => <Message />, []);
 	const collageMemo = useMemo(() => <Collage />, [pickedColor]);
 
 	return (
 		<Container>
-			<Message />
+			{messageMemo}
 			<CollageContext.Provider value={{ pickedColor, rangeValue }}>
 				{collageMemo}
 			</CollageContext.Provider>
