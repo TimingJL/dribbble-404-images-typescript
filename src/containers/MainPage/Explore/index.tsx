@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components/macro';
 import {
 	SIZE_THUMB,
@@ -9,7 +9,7 @@ import {
 	COLOR_BLUE_DARK,
 	COLOR_PURPLE,
 } from './constants';
-import { convertLengthToColor } from './utils';
+import { convertLengthToColor } from 'containers/MainPage/Explore/utils';
 
 const Container = styled.div`
 	margin-top: 32px;
@@ -44,25 +44,36 @@ const Container = styled.div`
 		background: white;
 		border: 0.4em solid ${props => props.color};
 		cursor: pointer;
+		transition: box-shadow 0.2s ease-in-out, transform 0.1s ease-in-out;
+		&:hover {
+			transform: scale(1.1);
+			box-shadow: 0 0.4em 1em rgba(0, 0, 0, 0.15);
+		}
+		&:active {
+			cursor: grabbing;
+			transform: scale(0.975);
+			box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+			border: 1.5em solid ${props => props.color};
+		}
 	}
 `;
 
-const Explore = () => {
-	const defaultValue = 50;
-	const defaultColor = convertLengthToColor(defaultValue, 100);
-	const [pickedColor, setPickedColor] = useState(defaultColor);
-	const handleOnDrag = useCallback(event => {
-		const color = convertLengthToColor(Number(event.target.value), 100);
-		setPickedColor(color);
-	}, []);
+interface IExplore {
+	rangeValue: number;
+	handleOnDrag: (event: any) => void;
+	handleOnMouseUp: (event: any) => void;
+}
+
+const Explore = ({ rangeValue, handleOnDrag, handleOnMouseUp }: IExplore) => {
+	const pickedColor = convertLengthToColor(rangeValue, 100);
 	return (
 		<Container color={pickedColor}>
 			<input
 				type="range"
 				min="0"
 				max="100"
-				defaultValue={defaultValue}
 				onChange={handleOnDrag}
+				onMouseUp={handleOnMouseUp}
 			/>
 		</Container>
 	);

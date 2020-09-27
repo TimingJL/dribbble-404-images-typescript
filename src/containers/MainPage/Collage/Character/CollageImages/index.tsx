@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext, useMemo } from 'react';
 import styled from 'styled-components/macro';
 import { imagePositions, imagePool } from './constants';
 import Images from './Images';
+import { CollageContext } from 'containers/MainPage/context';
 
 const getRandomImage = () => imagePool[Math.floor(Math.random() * imagePool.length)];
 const makeKey = (position: number[]) => `key_${position[0]}-${position[1]}`;
@@ -20,19 +21,23 @@ const Container = styled.div`
 
 const CollageImages = ({ character }: ICollageImages) => {
 	const positions = imagePositions[character];
-	return (
-		<Container>
-			{positions.map((position: number[]) => {
-				return (
-					<Images
-						key={makeKey(position)}
-						position={position}
-						imageUrl={getRandomImage()}
-						color={'#f04'}
-					/>
-				);
-			})}
-		</Container>
+	const { pickedColor } = useContext(CollageContext);
+	return useMemo(
+		() => (
+			<Container>
+				{positions.map((position: number[]) => {
+					return (
+						<Images
+							key={makeKey(position)}
+							position={position}
+							imageUrl={getRandomImage()}
+							color={pickedColor}
+						/>
+					);
+				})}
+			</Container>
+		),
+		[pickedColor]
 	);
 };
 
