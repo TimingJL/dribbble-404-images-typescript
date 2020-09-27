@@ -16,7 +16,7 @@ const Banner = styled.a`
 
 const Navigation = () => {
 	return (
-		<Nav>
+		<Nav data-testid="navigation">
 			<Banner href={'https://www.cakeresume.com/taiming'} target="_blank">
 				Taiming
 			</Banner>
