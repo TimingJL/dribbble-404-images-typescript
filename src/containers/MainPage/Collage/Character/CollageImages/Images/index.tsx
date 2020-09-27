@@ -39,12 +39,6 @@ const StyledImages = styled.div<IStyledImages>`
 	height: 8%;
 	border-radius: 5px;
 
-	background-image: url(${props => props.imageUrl}),
-		linear-gradient(${props => props.color}, ${props => props.color});
-	background-blend-mode: multiply;
-	background-size: cover;
-	background-position: center;
-
 	left: ${props => `${props.position[0]}%;`};
 	top: ${props => `${props.position[1]}%;`};
 
@@ -62,7 +56,20 @@ const StyledImages = styled.div<IStyledImages>`
 `;
 
 const Images = ({ position, imageUrl, color }: IImages) => {
-	return <StyledImages position={position} imageUrl={imageUrl} color={color} />;
+	const imageStyle = {
+		backgroundImage: `url(${imageUrl}), linear-gradient(${color}, ${color})`,
+		backgroundBlendMode: 'multiply',
+		backgroundSize: 'cover',
+		backgroundPosition: 'center',
+	};
+	return (
+		<StyledImages
+			style={imageStyle}
+			position={position}
+			imageUrl={imageUrl}
+			color={color}
+		/>
+	);
 };
 
 export default Images;
