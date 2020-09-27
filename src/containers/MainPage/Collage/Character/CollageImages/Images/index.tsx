@@ -25,12 +25,14 @@ const transformAnimation = () => {
 interface IStyledImages {
 	position: any;
 	imageUrl: string;
+	charId: number;
 }
 
 interface IImages {
 	position: any;
 	imageUrl: string;
 	color: string;
+	charId: number;
 }
 
 const StyledImages = styled.div<IStyledImages>`
@@ -52,10 +54,11 @@ const StyledImages = styled.div<IStyledImages>`
 		transition: all 0.1s ease-in-out;
 	}
 
-	animation: ${() => transformAnimation()} 2s ease-in-out;
+	animation: ${() => transformAnimation()} ${props => props.charId * 0.5 + 2}s
+		ease-in-out;
 `;
 
-const Images = ({ position, imageUrl, color }: IImages) => {
+const Images = ({ position, imageUrl, color, charId }: IImages) => {
 	const imageStyle = {
 		backgroundImage: `url(${imageUrl}), linear-gradient(${color}, ${color})`,
 		backgroundBlendMode: 'multiply',
@@ -68,6 +71,7 @@ const Images = ({ position, imageUrl, color }: IImages) => {
 			position={position}
 			imageUrl={imageUrl}
 			color={color}
+			charId={charId}
 		/>
 	);
 };

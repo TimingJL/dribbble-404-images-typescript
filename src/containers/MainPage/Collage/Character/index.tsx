@@ -24,13 +24,14 @@ const BackgroundShape = styled.h1`
 
 interface ICharacter {
 	character: string;
+	charId: number;
 }
 
-const Character = ({ character }: ICharacter) => {
+const Character = ({ character, charId }: ICharacter) => {
 	return (
 		<Container>
 			<BackgroundShape>{character}</BackgroundShape>
-			<CollageImages character={character} />
+			<CollageImages character={character} charId={charId} />
 		</Container>
 	);
 };

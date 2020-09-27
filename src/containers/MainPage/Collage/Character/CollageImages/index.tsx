@@ -9,6 +9,7 @@ const makeKey = (position: number[]) => `key_${position[0]}-${position[1]}`;
 
 interface ICollageImages {
 	character: string;
+	charId: number;
 }
 
 const Container = styled.div`
@@ -19,7 +20,7 @@ const Container = styled.div`
 	perspective: 500px; /* Give a 3D-positioned element some perspective */
 `;
 
-const CollageImages = ({ character }: ICollageImages) => {
+const CollageImages = ({ character, charId }: ICollageImages) => {
 	const positions = imagePositions[character];
 	const { pickedColor } = useContext(CollageContext);
 	return useMemo(
@@ -32,6 +33,7 @@ const CollageImages = ({ character }: ICollageImages) => {
 							position={position}
 							imageUrl={getRandomImage()}
 							color={pickedColor}
+							charId={charId}
 						/>
 					);
 				})}

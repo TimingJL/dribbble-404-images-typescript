@@ -21,7 +21,11 @@ const Collage = () => {
 	return (
 		<Section size={characterList.length}>
 			{characterList.map((character, index) => (
-				<Character key={makeKey(character, index)} character={character} />
+				<Character
+					key={makeKey(character, index)}
+					character={character}
+					charId={index}
+				/>
 			))}
 		</Section>
 	);
