@@ -4,6 +4,7 @@ import { imagePositions, imagePool } from './constants';
 import Images from './Images';
 
 const getRandomImage = () => imagePool[Math.floor(Math.random() * imagePool.length)];
+const makeKey = (position: number[]) => `key_${position[0]}-${position[1]}`;
 
 interface ICollageImages {
 	character: string;
@@ -21,14 +22,16 @@ const CollageImages = ({ character }: ICollageImages) => {
 	const positions = imagePositions[character];
 	return (
 		<Container>
-			{positions.map(position => (
-				<Images
-					key={position}
-					position={position}
-					imageUrl={getRandomImage()}
-					color={'#f04'}
-				/>
-			))}
+			{positions.map((position: number[]) => {
+				return (
+					<Images
+						key={makeKey(position)}
+						position={position}
+						imageUrl={getRandomImage()}
+						color={'#f04'}
+					/>
+				);
+			})}
 		</Container>
 	);
 };
