@@ -1,15 +1,14 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components/macro';
 
-const signed = () => (Math.floor(Math.random() * 10) % 2 === 0 ? 1 : -1);
-const getRandomArbitrary = (min: number, max: number) =>
-	Math.random() * (max - min) + min;
+const getRandomSigned = () => [1, -1][Math.floor(Math.random() * 2)];
+const getRandomInteger = (min: number, max: number) => Math.random() * (max - min) + min;
 
 const transformAnimation = () => {
-	const x = signed() * 1000 * Math.random();
-	const y = signed() * 1000 * Math.random();
+	const x = getRandomSigned() * 1000 * Math.random();
+	const y = getRandomSigned() * 1000 * Math.random();
 	const z = 100 * Math.random();
-	const s = getRandomArbitrary(2, 10);
+	const s = getRandomInteger(2, 10);
 	return keyframes`
     0% {
       opacity: 0;
