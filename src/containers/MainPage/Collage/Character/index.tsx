@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components/macro';
+import CollageImages from './CollageImages';
 
 const invisibleAnimation = keyframes`
   0% {
@@ -11,7 +12,9 @@ const invisibleAnimation = keyframes`
   }
 `;
 
-const Container = styled.div``;
+const Container = styled.div`
+	position: relative;
+`;
 
 const BackgroundShape = styled.h1`
 	color: #eee;
@@ -27,6 +30,7 @@ const Character = ({ character }: ICharacter) => {
 	return (
 		<Container>
 			<BackgroundShape>{character}</BackgroundShape>
+			<CollageImages character={character} />
 		</Container>
 	);
 };
