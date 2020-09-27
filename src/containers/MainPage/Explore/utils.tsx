@@ -7,29 +7,23 @@ export const convertLengthToColor = (length: number, width: number) => {
 	const deltaValue = (16 * (value - valueFloor)).toString(16).replace('.', '');
 	const hexStr =
 		deltaValue.length > 1 ? `${deltaValue[0]}${deltaValue[1]}` : `${deltaValue[0]}0`;
-	if (valueFloor === 0) {
-		return `#ff${hexStr}00`;
-	}
-	if (valueFloor === 1) {
-		const deltaR = (0xff - parseInt(hexStr, 16)).toString(16);
-		const updatedR = deltaR.length > 1 ? deltaR : `0${deltaR}`;
-		return `#${updatedR}ff00`;
-	}
-	if (valueFloor === 2) {
-		return `#00ff${hexStr}`;
-	}
-	if (valueFloor === 3) {
-		const deltaR = (0xff - parseInt(hexStr, 16)).toString(16);
-		const updatedR = deltaR.length > 1 ? deltaR : `0${deltaR}`;
-		return `#00${updatedR}ff`;
-	}
-	if (valueFloor === 4) {
-		return `#${hexStr}00ff`;
-	}
-	if (valueFloor === 5) {
-		const deltaR = (0xff - parseInt(hexStr, 16)).toString(16);
-		const updatedR = deltaR.length > 1 ? deltaR : `0${deltaR}`;
-		return `#ff00${updatedR}`;
-	}
-	return COLOR_RED;
+	const deltaR = (0xff - parseInt(hexStr, 16)).toString(16);
+	const colors = {
+		0: `#ff${hexStr}00`,
+		1: (() => {
+			const updatedR = deltaR.length > 1 ? deltaR : `0${deltaR}`;
+			return `#${updatedR}ff00`;
+		})(),
+		2: `#00ff${hexStr}`,
+		3: (() => {
+			const updatedR = deltaR.length > 1 ? deltaR : `0${deltaR}`;
+			return `#00${updatedR}ff`;
+		})(),
+		4: `#${hexStr}00ff`,
+		5: (() => {
+			const updatedR = deltaR.length > 1 ? deltaR : `0${deltaR}`;
+			return `#ff00${updatedR}`;
+		})(),
+	};
+	return valueFloor < 6 ? colors[valueFloor] : COLOR_RED;
 };
