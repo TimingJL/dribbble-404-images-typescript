@@ -6,6 +6,10 @@ import Explore from './Explore';
 
 const Container = styled.main`
 	flex: 1 1 auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 `;
 
 const MainPage = () => {
