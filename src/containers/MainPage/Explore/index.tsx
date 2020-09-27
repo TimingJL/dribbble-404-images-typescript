@@ -60,8 +60,8 @@ const Container = styled.div`
 
 interface IExplore {
 	rangeValue: number;
-	handleOnDrag: (event: any) => void;
-	handleOnMouseUp: (event: any) => void;
+	handleOnDrag: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	handleOnMouseUp: (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
 }
 
 const Explore = ({ rangeValue, handleOnDrag, handleOnMouseUp }: IExplore) => {

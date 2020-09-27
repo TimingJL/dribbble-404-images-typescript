@@ -22,13 +22,13 @@ const transformAnimation = () => {
 };
 
 interface IStyledImages {
-	position: any;
+	position: number[];
 	imageUrl: string;
 	charId: number;
 }
 
 interface IImages {
-	position: any;
+	position: number[];
 	imageUrl: string;
 	color: string;
 	charId: number;
