@@ -54,7 +54,7 @@ const StyledImages = styled.div<IStyledImages>`
 		transition: all 0.1s ease-in-out;
 	}
 
-	animation: ${() => transformAnimation()} ${props => props.charId * 0.5 + 2}s
+	animation: ${() => transformAnimation()} ${props => props.charId * 0.5 + 1.5}s
 		ease-in-out;
 `;
 
