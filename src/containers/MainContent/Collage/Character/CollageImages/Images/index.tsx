@@ -22,8 +22,6 @@ const transformAnimation = () => {
 };
 
 interface IStyledImages {
-	position: number[];
-	imageUrl: string;
 	charId: number;
 }
 
@@ -40,8 +38,9 @@ const StyledImages = styled.div<IStyledImages>`
 	height: 8%;
 	border-radius: 5px;
 
-	left: ${props => `${props.position[0]}%;`};
-	top: ${props => `${props.position[1]}%;`};
+	background-blend-mode: multiply;
+	background-size: cover;
+	background-position: center;
 
 	cursor: pointer;
 	transition: all 0.1s ease-in-out;
@@ -59,19 +58,10 @@ const StyledImages = styled.div<IStyledImages>`
 const Images = ({ position, imageUrl, color, charId }: IImages) => {
 	const imageStyle = {
 		backgroundImage: `url(${imageUrl}), linear-gradient(${color}, ${color})`,
-		backgroundBlendMode: 'multiply',
-		backgroundSize: 'cover',
-		backgroundPosition: 'center',
+		left: `${position[0]}%`,
+		top: `${position[1]}%`,
 	};
-	return (
-		<StyledImages
-			style={imageStyle}
-			position={position}
-			imageUrl={imageUrl}
-			color={color}
-			charId={charId}
-		/>
-	);
+	return <StyledImages style={imageStyle} charId={charId} />;
 };
 
 export default Images;
