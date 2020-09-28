@@ -11,6 +11,7 @@ const Section = styled.section`
 		font-size: 2rem;
 		margin: 1rem 0;
 		color: #333;
+		text-align: center;
 		@media screen and (max-width: 760px) {
 			font-size: 1.5rem;
 		}
