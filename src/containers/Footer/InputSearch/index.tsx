@@ -78,7 +78,11 @@ const InputSearch = ({
 	handleOnClearValue,
 	setIsOnFocus,
 }: IInputSearch) => (
-	<InputSearchContainer isOnFocus={isOnFocus} inputValue={inputValue}>
+	<InputSearchContainer
+		isOnFocus={isOnFocus}
+		inputValue={inputValue}
+		data-testid="input-search"
+	>
 		<SearchIcon className="input-search__search-icon" />
 		<div className="input-search__search-box-container">
 			<InputSearchBox
@@ -89,7 +93,12 @@ const InputSearch = ({
 				value={inputValue}
 			/>
 		</div>
-		<CancelIcon className="input-search__cancel-icon" onClick={handleOnClearValue} />
+		<div data-testid="cancel-icon">
+			<CancelIcon
+				className="input-search__cancel-icon"
+				onClick={handleOnClearValue}
+			/>
+		</div>
 	</InputSearchContainer>
 );
 
