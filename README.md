@@ -13,6 +13,8 @@ Study how [dribbble-404 page](https://dribbble.com/shots/902435-Website-Analytic
 - using `background-blend-mode` to change image color.
 - override `<input type="range" />` css style for color picker slider bar.
 
+## 使用套件說明
+
 ## 畫面排版
 
 ### 區塊規劃
@@ -35,6 +37,8 @@ Study how [dribbble-404 page](https://dribbble.com/shots/902435-Website-Analytic
 ```scss
 font-size: ${props => 90 / props.size}vw;
 ```
+
+> vw 表示的是 view width，也就是螢幕可是範圍寬度的百分比。
 
 [src/containers/MainContent/Collage/index.tsx](https://github.com/TimingJL/dribbble-404-images-typescript/blob/master/src/containers/MainContent/Collage/index.tsx#L12)
 
@@ -65,6 +69,7 @@ const imagePositions = {
   ],
 };
 ```
+[src/containers/MainPage/Collage/Character/CollageImages/constants.js](https://github.com/TimingJL/dribbble-404-images-typescript/blob/master/src/containers/MainPage/Collage/Character/CollageImages/constants.js#L1)
 
 **是否有更聰明的方法？**
 
@@ -75,7 +80,37 @@ const imagePositions = {
 
 ### 如何讓圖片飛入
 
-[src/containers/MainPage/Collage/Character/CollageImages/constants.js](https://github.com/TimingJL/dribbble-404-images-typescript/blob/master/src/containers/MainPage/Collage/Character/CollageImages/constants.js#L1)
+- 如果沒有設定透視(perspective)，transform 3D就會像平面一樣呈現。
+  - 設定 camera：`perspective`(物體到攝影機的距離), `perspective-origin`(攝影機的中心點位置)
+  - 設定 space：`transform-style`，預設為 flat，因此要設定為 `preserve-3d`。
+  - 設定 box：讓 Z 的深度有所變化 `translateZ` or `rotate`。
+- 另外由於飛入的時候，想要製造圖片由近而遠往前飛的效果，物理上，近距離的東西看起來比較大，變遠之後東西看起來會比較小，所以這邊加入 transform 的 `scale` 屬性來調整圖片方大縮小的比例。
+
+```html
+<div class="camera">
+    <div class="space">
+        <div class="box"></div>
+    </div>
+</div>
+```
+
+```javascript
+const transformAnimation = () => {
+  const z = 1000 * Math.random();
+  return keyframes`
+    0% {
+      opacity: 0;
+      transform: translateZ(${z}px) scale(2);
+    }
+    100% {
+      opacity: 1;
+      transform: translateZ(0px);
+    }
+  `;
+};
+```
+
+[玩轉 CSS 3D - 原理篇](https://www.oxxostudio.tw/articles/201506/css-3d.html)
 
 ## References
 
