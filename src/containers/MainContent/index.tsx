@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import Message from './Message';
 import Collage from './Collage';
 import Explore from './Explore';
-import { convertLengthToColor } from 'containers/MainPage/Explore/utils';
+import { convertLengthToColor } from 'containers/MainContent/Explore/utils';
 import { CollageContext } from './context';
 
 const Container = styled.main`
@@ -14,7 +14,7 @@ const Container = styled.main`
 	align-items: center;
 `;
 
-const MainPage = () => {
+const MainContent = () => {
 	const defaultValue = 50;
 	const defaultColor = convertLengthToColor(defaultValue, 100);
 	const [pickedColor, setPickedColor] = useState(defaultColor);
@@ -53,4 +53,4 @@ const MainPage = () => {
 	);
 };
 
-export default MainPage;
+export default MainContent;

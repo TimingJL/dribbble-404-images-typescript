@@ -2,7 +2,7 @@ import React, { useContext, useMemo } from 'react';
 import styled from 'styled-components/macro';
 import { imagePositions, imagePool } from './constants';
 import Images from './Images';
-import { CollageContext } from 'containers/MainPage/context';
+import { CollageContext } from 'containers/MainContent/context';
 
 const getRandomImage = () => imagePool[Math.floor(Math.random() * imagePool.length)];
 const makeKey = (position: number[]) => `key_${position[0]}-${position[1]}`;
@@ -17,7 +17,7 @@ const Container = styled.div`
 	top: 0px;
 	width: 100%;
 	height: 100%;
-	perspective: 500px; /* Give a 3D-positioned element some perspective */
+	perspective: 50px; /* Give a 3D-positioned element some perspective */
 `;
 
 const CollageImages = ({ character, charId }: ICollageImages) => {

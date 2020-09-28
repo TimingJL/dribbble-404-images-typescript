@@ -9,7 +9,7 @@ import {
 	COLOR_BLUE_DARK,
 	COLOR_PURPLE,
 } from './constants';
-import { convertLengthToColor } from 'containers/MainPage/Explore/utils';
+import { convertLengthToColor } from 'containers/MainContent/Explore/utils';
 
 const Container = styled.div`
 	margin-top: 32px;

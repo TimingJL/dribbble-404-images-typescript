@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components/macro';
 import Navigation from 'containers/Navigation';
-import MainPage from 'containers/MainPage';
+import MainContent from 'containers/MainContent';
 import GithubCorner from 'react-github-corner';
 
 const FullScreenContainer = styled.div`
@@ -17,7 +17,7 @@ const App = () => {
 		<>
 			<FullScreenContainer>
 				{navigationMemo}
-				<MainPage />
+				<MainContent />
 			</FullScreenContainer>
 			<GithubCorner href="https://github.com/TimingJL/dribbble-404-images-typescript" />
 		</>
