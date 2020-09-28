@@ -1,22 +1,16 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components/macro';
 
-const getRandomSigned = () => [1, -1][Math.floor(Math.random() * 2)];
-const getRandomInteger = (min: number, max: number) => Math.random() * (max - min) + min;
-
 const transformAnimation = () => {
-	const x = getRandomSigned() * 1000 * Math.random();
-	const y = getRandomSigned() * 1000 * Math.random();
-	const z = 100 * Math.random();
-	const s = getRandomInteger(2, 10);
+	const z = 1000 * Math.random();
 	return keyframes`
     0% {
       opacity: 0;
-      transform: translateX(${x}px) translateY(${y}px) translateZ(${z}px) scale(${s});
+			transform: translateZ(${z}px) scale(2);
     }
     100% {
       opacity: 1;
-      transform: translateZ(0px) scale(1);
+      transform: translateZ(0px);
     }
   `;
 };
@@ -52,7 +46,7 @@ const StyledImages = styled.div<IStyledImages>`
 		transition: all 0.1s ease-in-out;
 	}
 
-	animation: ${transformAnimation} ${props => props.charId * 0.5 + 1.5}s ease-in-out;
+	animation: ${transformAnimation} ${props => props.charId + 1}s ease-in-out;
 `;
 
 const Images = ({ position, imageUrl, color, charId }: IImages) => {

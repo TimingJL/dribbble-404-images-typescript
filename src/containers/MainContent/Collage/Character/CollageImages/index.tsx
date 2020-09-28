@@ -17,7 +17,7 @@ const Container = styled.div`
 	top: 0px;
 	width: 100%;
 	height: 100%;
-	perspective: 50px; /* Give a 3D-positioned element some perspective */
+	transform-style: preserve-3d;
 `;
 
 const CollageImages = ({ character, charId }: ICollageImages) => {

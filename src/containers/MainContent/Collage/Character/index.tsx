@@ -14,6 +14,7 @@ const invisibleAnimation = keyframes`
 
 const Container = styled.div`
 	position: relative;
+	perspective: 500px; /* Give a 3D-positioned element some perspective */
 `;
 
 const BackgroundShape = styled.h1`
