@@ -332,7 +332,7 @@ const COLOR_PURPLE = '#f0f';
   - 解法01: 在每個 styled-components 元件下面，可以定義自己的 className
   - 解法02: 使用 `styled-components/macro`
 - 只要每次傳入的 props 發生改變，styled-components 元件就需要產一個新的 class 來改變樣式。因此，太頻繁更新的元件，會造成 render 速度變慢的效能問題。
-  - 解法01：想辦法減少不必要的 re-render
+  - 解法01：想辦法減少不必要的 re-render (React.memo, useMemo)
   - 解法02：使用 inline-style (style object) 來代替 `styled-components`
   - 解法03：不要用 styled-components..... 😭
 
