@@ -23,7 +23,7 @@ Study how [dribbble-404 page](https://dribbble.com/shots/902435-Website-Analytic
 
 由於現代瀏覽器對於 css flex 屬性支援還不錯，因此類似的情境我喜歡用 flex 來處理。
 
-- 首先將外容器用 `display: flex;` 宣告為 flex 容器，由於 `display: flex;` 預設為水瓶排版，因此我們用 `flex-direction: column;` 讓他變成垂直排版
+- 首先將外容器用 `display: flex;` 宣告為 flex 容器，由於 `display: flex;` 預設為水平排版，因此我們用 `flex-direction: column;` 讓他變成垂直排版
 - 接著在 main 的區塊設定為 `flex: 1 1 auto;` ，使他可以填滿剩餘空間。
 
 ![flexible box](demo/can_i_use_flexible_box_layout.png)
