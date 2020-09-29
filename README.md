@@ -80,8 +80,8 @@ const imagePositions = {
 
 ### 如何讓圖片飛入
 
-- 如果沒有設定透視(perspective)，transform 3D就會像平面一樣呈現。
-  - 設定 camera：`perspective`(物體到攝影機的距離), `perspective-origin`(攝影機的中心點位置)
+- CSS 屬性 perspective 指定了觀察者與 z=0 平面的距離，使具有三維位置變換的元素產生透視效果，如果沒有設定透視(perspective)，transform 3D 就會像平面一樣呈現。
+  - 設定 camera：`perspective`(物體到攝影機的距離)， `perspective-origin`(攝影機的中心點位置)
   - 設定 space：`transform-style`，預設為 flat，因此要設定為 `preserve-3d`。
   - 設定 box：讓 Z 的深度有所變化 `translateZ` or `rotate`。
 - 另外由於飛入的時候，想要製造圖片由近而遠往前飛的效果，物理上，近距離的東西看起來比較大，變遠之後東西看起來會比較小，所以這邊加入 transform 的 `scale` 屬性來調整圖片方大縮小的比例。
@@ -110,7 +110,202 @@ const transformAnimation = () => {
 };
 ```
 
+![css_property_perspective](demo/css_property_perspective.png)
+
 [玩轉 CSS 3D - 原理篇](https://www.oxxostudio.tw/articles/201506/css-3d.html)
+
+### 圖片載入處理
+
+```js
+fetchAndBuildShots: function(){
+  var that = this
+  var hex = this.syncColors()
+
+  this.loading()
+  this.colorRange.disabled = true
+
+  // call api and get new shots
+  var request = new XMLHttpRequest()
+  // https://dribbble.com/colors/for_404.json?hex=ff00d4
+  request.open('GET', '/colors/for_404.json?hex=' + hex.replace('#',''), true)
+  request.setRequestHeader("X-Requested-With", "XMLHttpRequest")
+  request.onload = (function() {
+    if (request.status == 200) {
+      this.colorRange.disabled = false
+      this.shots = JSON.parse(request.response).shots
+      if( this.shots.length > 0 ){
+        this.loaded()
+      }
+      this.build404Shots(this.shots)
+    } else {
+      console.log("Error fetching colors.")
+    }
+  }).bind(this);
+  request.onerror = function() {
+    console.log("Error fetching colors.")
+  };
+  request.send()
+}
+```
+
+**Referrer Policy: strict-origin-when-cross-origin**
+![image_list](demo/image_list.png)
+
+```js
+build404Shots: function(data){
+  this.collageImages.innerHTML = ''
+  var numLoaded = 0
+  var that = this
+
+  //create all links to shots and images
+  Array.prototype.forEach.call(data,function(shot,i){
+
+    if(i>51) return;
+
+    var link = document.createElement("a")
+    link.href = shot.url
+
+    //randomly position and style each shot link
+    var x = 0*Math.random()
+    var y = 0*Math.random()
+    var z = 500*Math.random()
+    var s = (0.75 + 0.25*Math.random())
+    var transform = "translateX(" + x + "%) translateY(" + y + "%) scale(" + s + ") "
+    link.style.transform = transform + " translateZ(" + z + "px)"
+    link.style.color = "rgba(0,0,0," + (1-s)*0.5 + ")"
+    link.style.boxShadow = "0 0 0 currentColor"
+
+    //setup the shot image
+    var img = document.createElement("img")
+
+    function imgLoaded(){
+      numLoaded++;
+      link.classList.add("loaded")
+      link.style.transform = transform
+      setTimeout(function(){
+        link.classList.add("introduced")
+      },2000)
+      if(numLoaded == data.length){
+        that.loaded()
+      }
+    }
+
+    //start loading the image
+    img.src = shot.img;
+    if(img.complete){
+      setTimeout(imgLoaded,10)
+    }else{
+      img.addEventListener("load",imgLoaded)
+      img.addEventListener("error",imgLoaded)
+    }
+
+    // append all to the 404 images
+    link.appendChild(img)
+    that.collageImages.appendChild(link)
+
+  });
+},
+```
+
+### 圖片顏色處理
+
+由於 dribbble shot api 有 `strict-origin-when-cross-origin`，因此我們沒辦法使用它。因此下面有幾種可以拿到圖片的方式：
+
+1. 自己做爬蟲去 dribbble 上面爬圖片，並且架一個 shot api server
+    - 優點：可以做到幾乎跟原作一樣的效果
+    - 缺點：開發及維護成本高
+2. 使用有透明度的顏色遮罩蓋在圖片上面
+    - 優點：不用寫爬蟲、api server
+    - 缺點：所選擇的顏色總是會差一個透明度，所以看起來顏色比較淡，視覺效果沒有那麼好。如果調高透明度，那麼後面圖片就會看不清楚，但若調低透明度，則我們所指定的顏色就會不那麼明顯。
+3. 使用 CSS property: `background-blend-mode`，使用 `multiply` 模式，可以幫助我們把 2 張圖像用混合模式做效果。
+    - 優點：不用寫爬蟲、api server、不會有透明度問題
+    - 缺點：會失去原本圖片的顏色，但這個缺點我覺得比上面的遮罩變色方式較為能夠被接受。
+
+```css
+background-image: url(imageUrl), linear-gradient(#f00, #f00);
+background-blend-mode: multiply;
+```
+
+![background-blend-mode](./demo/css_property_background_blend_mode.png)
+
+[使用 background-blend-mode 实现主色改为渐变色](https://www.cnblogs.com/coco1s/p/8080211.html)
+[不可思议的混合模式 background-blend-mode](https://github.com/chokcoco/iCSS/issues/31)
+
+## 彩色顏色選擇拉霸(Color Picker Slider Bar)
+
+### 拉霸
+
+實現方式
+
+1. 使用 RxJS 來實作拖拉功能
+2. 直接覆寫 `<input type="range" />` 的 CSS 樣式
+
+**使用 RxJS 來實作拖拉功能**
+
+1. 首先畫面上有一個元件(thumbDOM)
+2. 當滑鼠在元件(thumbDOM)上按下左鍵(mousedown)時，開始監聽滑鼠移動(mousemove)的位置
+3. 當滑鼠左鍵放掉(mouseup)時，結束監聽滑鼠移動
+4. 當滑鼠移動(mousemove)被監聽時，跟著修改元件的樣式屬性
+
+```js
+const mouseDown = fromEvent(thumbDOM, 'mousedown');
+const mouseUp = fromEvent(body, 'mouseup');
+const mouseMove = fromEvent(body, 'mousemove');
+mouseDown
+  .pipe(
+    concatMap(() => mouseMove.pipe(takeUntil(mouseUp))),
+    map((moveEvent) => moveEvent.clientX),
+  )
+  .subscribe((mousePosX) => {
+    handleSetValue(trackDOM, mousePosX);
+  });
+```
+
+[src/components/ColorPickerSlider/customHooks.js](https://github.com/TimingJL/dribbble-like-collage-images-animation/blob/master/src/components/ColorPickerSlider/customHooks.js#L15)
+
+**直接覆寫 `<input type="range" />` 的 CSS 樣式**
+使用到-webkit-appearance這個特殊屬性，這是 webkit 特有的屬性，代表使用系統預設的外觀。
+
+只要我們將這個屬性設為 none，那麼原本 range 的樣式就不會呈現了，這時我們只要加入自己的背景、陰影...等樣式。
+
+```css
+input[type="range"]{
+  -webkit-appearance: none;
+  /* 覆寫 thumb 的樣式 */
+  background: linear-gradient(
+    to right,
+    ${COLOR_RED},
+    ${COLOR_YELLOW},
+    ${COLOR_GREEN},
+    ${COLOR_BLUE_LIGHT},
+    ${COLOR_BLUE_DARK},
+    ${COLOR_PURPLE},
+    ${COLOR_RED}
+  );
+}
+
+input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  /* 覆寫 slider 的樣式 */
+}
+```
+
+[src/containers/MainContent/Explore/index.tsx](https://github.com/TimingJL/dribbble-404-images-typescript/blob/master/src/containers/MainContent/Explore/index.tsx#L21)
+
+### 拖拉功能選顏色
+
+因為我們拉霸有`六種`顏色，分別是`紅色、黃色、綠色、淺藍、深藍、紫色、回到紅色`。兩個相鄰的顏色彼此漸層。所以這邊我就用兩個顏色相鄰的距離，來對應相對的顏色。
+
+由於顏色的表達是由16進位的 00 到 ff ，或是 ff 到 00 ，因此把距離換算成相對應比例的 16 進位數字 之後，就能夠產生相對應的色票顏色了。
+
+```js
+const COLOR_RED = '#f00';
+const COLOR_YELLOW = '#ff0';
+const COLOR_GREEN = '#0f0';
+const COLOR_BLUE_LIGHT = '#0ff';
+const COLOR_BLUE_DARK = '#00f';
+const COLOR_PURPLE = '#f0f';
+```
 
 ## References
 

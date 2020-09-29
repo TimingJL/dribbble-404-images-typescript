@@ -2,11 +2,13 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components/macro';
 
 const transformAnimation = () => {
+	const x = 0 * Math.random();
+	const y = 0 * Math.random();
 	const z = 1000 * Math.random();
 	return keyframes`
     0% {
       opacity: 0;
-			transform: translateZ(${z}px) scale(2);
+			transform: translateZ(${x}px) translateZ(${y}px) translateZ(${z}px) scale(2);
     }
     100% {
       opacity: 1;
