@@ -13,8 +13,6 @@ Study how [dribbble-404 page](https://dribbble.com/shots/902435-Website-Analytic
 - using `background-blend-mode` to change image color.
 - override `<input type="range" />` css style for color picker slider bar.
 
-## 使用套件說明
-
 ## 畫面排版
 
 ### 區塊規劃
@@ -306,6 +304,73 @@ const COLOR_BLUE_LIGHT = '#0ff';
 const COLOR_BLUE_DARK = '#00f';
 const COLOR_PURPLE = '#f0f';
 ```
+
+[src/containers/MainContent/Explore/utils.tsx /
+](https://github.com/TimingJL/dribbble-404-images-typescript/blob/master/src/containers/MainContent/Explore/utils.tsx#L3)
+
+## 問題與討論
+
+### Styled-components
+
+**優點：**
+
+- 是一個 CSS in JS 的函式庫，可以用 JavaScript 來定義 classNames 及 styles。提供我們能撰寫變量、循環、函數等，使我們更隨心所欲地做出複雜的樣式。
+- 幫助我們將樣式寫成語意化的元件。支援 React 的 props 傳入，操作起來接近 React component。
+- 每次 props 發生改變，會為我們產生一個 hash 命名的 className，幫助我們輕易解決 CSS 作用域痊癒衝突的問題。
+- 提供 ThemeProvider 可以簡單抽換全域所需要使用的主題樣式。
+- 跟其他 JSS ，例如 Material UI `@material-ui/styles` 提供的 `makeStyles`比起來，語法與原生 CSS 接近，因此可以無痛轉移。
+
+一般來說，CSS的限制是他沒有變量、循環和函數等邏輯，所以我們很難在撰寫純 CSS 的時候做出複雜的變化，為了解決這個問題，開始出現了在JS上編寫CSS的做法， styled-components 是其中一種解決方案。
+
+使用 styled-components 的好處有很多，例如它可以幫助我們將樣式寫成更具`語義化的組件`的形式，提高可讀性。另外有一個我很喜歡的功能，就是可以`將 React 的參數用 props 的方式傳入`來控制樣式。
+
+因為 CSS 的作用域是全局的，所以很容易產生衝突，特別是在專案更複雜的時候。但是使用styled-components 會為我們生成的 React 元件產生隨機的 className，重複使用這些元件的時候隨機的 className 也會不同，因此能夠避免元件之間 className 的衝突，順利的解決CSS全局作用域的問題。
+
+**缺點：**
+
+- 由於是 hash 產生的 className，因此打開 `browser devtool` 會容易找不到想要找的元件。
+  - 解法01: 在每個 styled-components 元件下面，可以定義自己的 className
+  - 解法02: 使用 `styled-components/macro`
+- 只要每次傳入的 props 發生改變，styled-components 元件就需要產一個新的 class 來改變樣式。因此，太頻繁更新的元件，會造成 render 速度變慢的效能問題。
+  - 解法01：想辦法減少不必要的 re-render
+  - 解法02：使用 inline-style (style object) 來代替 `styled-components`
+  - 解法03：不要用 styled-components..... 😭
+
+![hash-class-name](https://ithelp.ithome.com.tw/upload/images/20190916/201132776AzO68U8KA.png)
+
+```js
+const StyledElement = styled(Element)`
+  width: 80%;
+  height: 300px;
+  box-shadow: 0 0 5px 2px #ccc;
+  .element__img {
+    display: inline-block;
+    width: 300px;
+    height: 100%;
+    background-image: url('this is background url');
+  }
+  .element__info {
+    display: inline-block;
+    vertical-align: top;
+    width: calc(100% - 300px);
+    height: 100%;
+    text-align: left;
+    .element__title {
+      padding: 20px 0 0 20px;
+      font-size: 48px;
+      color: ${props => (props.red ? 'red' : 'black')};
+    }
+    .element__description {
+      padding: 20px;
+      font-size: 30px;
+      font-style: italic;
+      color: #888888;
+    }
+  }
+`
+```
+
+> "Over 200 classes were generated for component styled.div. Consider using the attrs method, together with a style object for frequently changed styles."
 
 ## References
 
